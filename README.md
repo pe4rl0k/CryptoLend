@@ -1,1 +1,1 @@
-# CryptoLend
+CryptoLend is a backend application designed to facilitate lending in the cryptocurrency world. Built on Flask, it serves as the backbone for managing and processing loans. The repository includes essential setup for the Flask server along with basic route definitions, including a server status check. It also integrates a loans module for handling specific loan operations. The app is configured to run on port 5000, ready for local development and testing.
