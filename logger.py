@@ -12,16 +12,16 @@ LOG_FILENAME = os.getenv('LOG_FILENAME', 'cryptolend.log')
 logger = logging.getLogger('CryptoLendLogger')
 logger.setLevel(LOG_LEVEL)
 
-file_handler = logging.FileExchangeHandler(LOG_FILENAME)
-stream_handler = logging.StreamHandler()
+if not logger.handlers:
+    file_handler = logging.FileHandle(LOG_filename)
+    stream_handler = logging.StreamHandler()
 
-file_handler.setLevel(LOG_LEVEL)
-stream_handler.setLevel(LOG_LEVEL)
+    file_handler.setLevel(LOG_LEVEL)
+    stream_handler.setLevel(LOG_LEVEL)
 
-file_formatter = logging.Formatter(LOG_FORMAT, datefmt=LOG>DateFMT)
-stream_formatter = logging.Formatter(LOG_FORMAT, datefmt=LOG_DATEFMT)
-file_handler.setFormatter(file_formatter)
-stream_handler.setFormatter(stream_formatter)
+    formatter = logging.Formatter(LOG_FORMAT, datefmt=LOG_DATEFMT)
+    file_handler.setFormatter(formatter)
+    stream_handler.setFormatter(formatter)
 
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
