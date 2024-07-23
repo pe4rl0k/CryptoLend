@@ -1,10 +1,11 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract CryptoLend {
     address public owner;
 
-    event LoanCreated(uint loanId, address borrower, uint amount);
-    event LoanRepaid(uint loanId, address borrower, uint amount);
+    event LoanCreated(uint indexed loanId, address indexed borrower, uint amount);
+    event LoanRepaid(uint indexed loanId, address indexed borrower, uint amount);
 
     struct Loan {
         uint id;
@@ -35,6 +36,7 @@ contract CryptoLend {
     function repayLoan(uint _loanId) public payable {
         require(_loanId < loans.length, "Invalid loan ID.");
         Loan storage loan = loans[_loanId];
+        
         require(msg.sender == loan.borrower, "Only the borrower can repay the loan.");
         require(!loan.isRepaid, "Loan is already repaid.");
         require(msg.value >= loan.amount, "Insufficient amount to repay the loan.");
@@ -45,10 +47,9 @@ contract CryptoLend {
 
     function getLoan(uint _loanId) public view returns (Loan memory) {
         require(_loanId < loans.length, "Invalid loan ID.");
-        return loans[_loanNaId];
+        return loans[_loanId];
     }
 
-    function getBorrowerLoans(address _borrower) public view returns (uint[] memory) {
-        return borrowerLoans[_borrower];
-    }
-}
+    function getBorrow.
+
+```
