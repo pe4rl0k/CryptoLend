@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-const Navigation = () => (
+const Navigation = React.memo(() => (
   <nav className="navigation">
     <ul>
       <li><Link to="/">Home</Link></li>
@@ -12,7 +12,7 @@ const Navigation = () => (
       <li><Link to="/about">About</Link></li>
     </ul>
   </nav>
-);
+));
 
 const Header = () => {
   return (
@@ -25,4 +25,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
