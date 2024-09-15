@@ -15,6 +15,7 @@ const LoanView = () => {
       }
     };
 
+    // Fetch loans data on component mount
     fetchLoans();
   }, []);
 
@@ -22,7 +23,8 @@ const LoanView = () => {
     try {
       const response = await axios.post(`${API_URL}/loans/${loanId}/${action}`);
       console.log('Loan action response:', response.data);
-      fetchLoans();
+      // Refresh loans data after any interaction
+      fetchLoans(); 
     } catch (error) {
       console.error('Error handling loan interaction:', error);
     }
@@ -37,7 +39,9 @@ const LoanView = () => {
             <p>Loan ID: {loan.id}</p>
             <p>Amount: {loan.amount}</p>
             <p>Status: {loan.status}</p>
-            <button onClick={() => handleLoanInteraction(loan.id, 'repay')}>Repay Loan</button>
+            <button onClick={() => handleLoanInteraction(loan.id, 'repay')}>
+              Repay Loan
+            </button>
           </li>
         ))}
       </ul>
