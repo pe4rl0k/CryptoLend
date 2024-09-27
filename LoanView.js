@@ -6,28 +6,30 @@ const LoanView = () => {
   const [loans, setLoans] = useState([]);
 
   useEffect(() => {
-    const fetchLoans = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/loans`);
-        setLoans(response.data);
-      } catch (error) {
-        console.error('Error fetching loans data:', error);
-      }
-    };
-
-    // Fetch loans data on component mount
-    fetchLoans();
+    fetchLoansData();
   }, []);
+
+  const fetchLoansData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/loans`);
+      setLoans(response.data);
+    } catch (error) {
+      console.error('Error fetching loans data:', error);
+    }
+  };
 
   const handleLoanInteraction = async (loanId, action) => {
     try {
-      const response = await axios.post(`${API_URL}/loans/${loanId}/${action}`);
-      console.log('Loan action response:', response.data);
-      // Refresh loans data after any interaction
-      fetchLoans(); 
+      await performLoanAction(loanId, action);
+      fetchLoansData(); // Refresh loans data after any interaction
     } catch (error) {
       console.error('Error handling loan interaction:', error);
     }
+  };
+
+  const performLoanAction = async (loanId, action) => {
+    const response = await axios.post(`${API_URL}/loans/${loanId}/${action}`);
+    console.log('Loan action response:', response.data);
   };
 
   return (
@@ -35,18 +37,26 @@ const LoanView = () => {
       <h2>Loan Details</h2>
       <ul>
         {loans.map((loan) => (
-          <li key={loan.id}>
-            <p>Loan ID: {loan.id}</p>
-            <p>Amount: {loan.amount}</p>
-            <p>Status: {loan.status}</p>
-            <button onClick={() => handleLoanInteraction(loan.id, 'repay')}>
-              Repay Loan
-            </button>
-          </li>
+          <LoanListItem 
+            key={loan.id} 
+            loan={loan} 
+            onInteraction={handleLoanInteraction} 
+          />
         ))}
       </ul>
     </div>
   );
 };
+
+const LoanListItem = ({ loan, onInteraction }) => (
+  <li>
+    <p>Loan ID: {loan.id}</p>
+    <p>Amount: {loan.amount}</p>
+    <p>Status: {loan.status}</p>
+    <button onClick={() => onInteraction(loan.id, 'repay')}>
+      Repay Loan
+    </button>
+  </li>
+);
 
 export default LoanView;
